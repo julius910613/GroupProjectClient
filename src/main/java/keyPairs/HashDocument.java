@@ -22,8 +22,8 @@ public class HashDocument {
     }
 
     static byte[] array ;
-    private static final File dataDir = new File("/home/xwen/Downloads");
-    private static final File document = new File(dataDir,"test");
+    private static final File dataDir = new File("D:\\");
+    private static final File document = new File(dataDir,"1.txt");
     public static byte[] shaHash() throws IOException {
         // give hash code of a document
         FileInputStream fileInputStream=new FileInputStream(document);
@@ -47,8 +47,14 @@ public class HashDocument {
         fileInputStream.close();
         outputStream.close();
         return hash1;
-    }
 
+
+    }
+    public static byte[] generateFileHashcode( ) throws IOException {
+        HashDocument encryAndValidate = new HashDocument();
+        byte[] a =encryAndValidate.shaHash();
+        return a;
+    }
     public static void main(String[] args) throws IOException, NoSuchAlgorithmException, NoSuchProviderException, IllegalBlockSizeException, NoSuchPaddingException, BadPaddingException, SignatureException, InvalidKeyException {
         System.out.println("-------");
         HashDocument encryAndValidate = new HashDocument();

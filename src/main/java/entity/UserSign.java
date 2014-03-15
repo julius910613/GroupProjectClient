@@ -29,9 +29,9 @@ public class UserSign {
         return sign;
     }
 
-    public void setSign(PrivateKey privateKey) {
+    public byte[] generateSign(PrivateKey privateKey){
         try {
-           sign= Keys.encrypt(privateKey,userEmailAddress.getBytes());
+             sign= Keys.encrypt(privateKey,userEmailAddress.getBytes());
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         } catch (InvalidKeyException e) {
@@ -45,5 +45,10 @@ public class UserSign {
         } catch (IllegalBlockSizeException e) {
             e.printStackTrace();
         }
+        return sign;
+    }
+
+    public void setSign(byte[] sign) {
+        this.sign = sign;
     }
 }

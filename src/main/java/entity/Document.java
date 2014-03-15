@@ -3,7 +3,11 @@ package entity;
 import java.io.Serializable;
 
 /**
- * Created by xwen on 3/12/14.
+ * Created with IntelliJ IDEA.
+ * User: cmdadmin
+ * Date: 06/03/14
+ * Time: 08:49
+ * To change this template use Document | Settings | Document Templates.
  */
 public class Document implements Serializable {
 
@@ -11,13 +15,13 @@ public class Document implements Serializable {
     private String fileName;
     private String senderName;
     private String receiverName;
-    private byte[] documentHashCode;
+    private String documentHashCode;
 
-    public byte[] getDocumentHashCode() {
+    public String getDocumentHashCode() {
         return documentHashCode;
     }
 
-    public void setDocumentHashCode(byte[] documentHashCode) {
+    public void setDocumentHashCode(String documentHashCode) {
         this.documentHashCode = documentHashCode;
     }
 

@@ -1,14 +1,19 @@
 package clientRest;
 
 import entity.ConnectionMsg;
+import entity.UploadFilePackage;
 import entity.User;
 
+import keyPairs.HashDocument;
 import org.apache.http.entity.ContentType;
 import org.codehaus.jackson.annotate.JsonAutoDetect;
 import org.codehaus.jackson.annotate.JsonMethod;
 import org.glassfish.jersey.jackson.JacksonFeature;
 
 
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
@@ -19,6 +24,11 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.security.SignatureException;
+
+import entity.*;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -32,6 +42,8 @@ import org.apache.http.impl.client.DefaultHttpClient;
  * Created by xwen on 3/12/14.
  */
 public class ClientRest {
+
+    private static String label;
 
     private static final String REST_SERVICE_URL_USER = "http://localhost:8080/TTPService/requsetForConection";
     private static final String REST_SERVICE_URL = "http://localhost:8080/userService";
@@ -65,8 +77,27 @@ public class ClientRest {
 
         ConnectionMsg cm = client.target(REST_SERVICE_URL_USER).request().post(Entity.entity(user, MediaType.APPLICATION_JSON), ConnectionMsg.class);
         System.out.println(cm.isAccessPermission());
+        if(cm.isAccessPermission() == true){
+            label = cm.getLabel();
+
+        }
 
     }
+
+    public void requestForUploadFile(User user) throws Exception {
+
+        uploadFile();
+        UploadFilePackage uploadFilePackage = new UploadFilePackage();
+        uploadFilePackage.setLabel(label);
+        uploadFilePackage.setSignatureOfUser(HashDocument.generateFileHashcode(user));
+        Document document = new Document();
+        document.setSenderName(user.getUserEmailAddress());
+        document.setFileName("1.txt");
+        document.setReceiverName("111@aa.com");
+        uploadFilePackage.setDocument(document);
+    }
+
+
 
     public void uploadFile() throws Exception {
 
@@ -81,22 +112,22 @@ public class ClientRest {
         try {
             //Set various attributes
             MultipartEntity multiPartEntity = new MultipartEntity();
-          // multiPartEntity.addPart("fileDescription", new StringBody(fileDescription != null ? fileDescription : fileDescription));
-            //multiPartEntity.addPart("fileName", new StringBody(fileName != null ? fileName : file.getName()));
+          multiPartEntity.addPart("fileDescription", new StringBody(fileDescription != null ? fileDescription : fileDescription));
+            multiPartEntity.addPart("fileName", new StringBody(fileName != null ? fileName : file.getName()));
 
             FileBody fileBody = new FileBody(file, ContentType.APPLICATION_OCTET_STREAM);
             //Prepare payload
-            multiPartEntity.addPart("attachment", fileBody);
+            multiPartEntity.addPart("file", fileBody);
 
             //Set to request body
             postRequest.setEntity(multiPartEntity);
 
-            //Send request
+            //Send request      UploadFilePackage
             HttpResponse response = client.execute(postRequest);
 
             //Verify response if any
             if (response != null) {
-                System.out.println(response.getStatusLine().getStatusCode());
+                System.out.println(response.getEntity().toString());
             }
         } catch (Exception ex) {
             ex.printStackTrace();

@@ -20,12 +20,12 @@ import java.util.Arrays;
 public class test {
     public static void main(String[] args) throws UnsupportedEncodingException {
         ClientRest clientRest=new ClientRest();
-       // User user = new User("123@gmail.com", 1024);
+        User user = new User("123@gmail.com", 1024);
     //    System.out.println(user.getPublicKey().toString());
 
-       // PrivateKey privateKey = GenerateKey.generatePrivateKey(user.getPrivateKey());
-       // user.generateSign(privateKey);
-     //   System.out.println(new String(user.getSign(),"UTF-8"));
+        PrivateKey privateKey = GenerateKey.generatePrivateKey(user.getPrivateKey());
+        user.generateSign(privateKey);
+        System.out.println(new String(user.getSign(),"UTF-8"));
 
         try {
             System.out.println(HashDocument.generateFileHashcode().length);
@@ -35,7 +35,7 @@ public class test {
         } catch (Exception e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
-        //  clientRest.requestForConnect(user);
+          clientRest.requestForConnect(user);
        // clientRest.requestForConnect(user);
 
 

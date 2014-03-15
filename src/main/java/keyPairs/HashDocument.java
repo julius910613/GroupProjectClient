@@ -1,5 +1,7 @@
 package keyPairs;
 
+import entity.User;
+
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
@@ -50,10 +52,13 @@ public class HashDocument {
 
 
     }
-    public static byte[] generateFileHashcode( ) throws IOException {
+    public static byte[] generateFileHashcode(User user) throws IOException, NoSuchPaddingException, NoSuchAlgorithmException, IllegalBlockSizeException, BadPaddingException, SignatureException, InvalidKeyException {
         HashDocument encryAndValidate = new HashDocument();
         byte[] a =encryAndValidate.shaHash();
-        return a;
+        PrivateKey privateKey = GenerateKey.generatePrivateKey(user.getPrivateKey());
+
+        byte[] encryptedCode =  Keys.encrypt(privateKey, a);
+        return encryptedCode;
     }
     public static void main(String[] args) throws IOException, NoSuchAlgorithmException, NoSuchProviderException, IllegalBlockSizeException, NoSuchPaddingException, BadPaddingException, SignatureException, InvalidKeyException {
         System.out.println("-------");

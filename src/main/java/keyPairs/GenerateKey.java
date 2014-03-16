@@ -1,9 +1,9 @@
 package keyPairs;
 
-import java.security.KeyFactory;
-import java.security.NoSuchAlgorithmException;
-import java.security.PrivateKey;
-import java.security.PublicKey;
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+import java.security.*;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
@@ -48,6 +48,12 @@ public class GenerateKey {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
         return publicKey;
+    }
+
+    public static byte[] encryptFileHashCode(PrivateKey privateKey, byte[] file) throws NoSuchPaddingException, NoSuchAlgorithmException, IllegalBlockSizeException, BadPaddingException, SignatureException, InvalidKeyException {
+
+
+        return Keys.encrypt(privateKey, file);
     }
 
 }

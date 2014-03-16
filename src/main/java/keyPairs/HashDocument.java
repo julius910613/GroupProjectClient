@@ -52,14 +52,14 @@ public class HashDocument {
 
 
     }
-    public static byte[] generateFileHashcode(User user) throws IOException, NoSuchPaddingException, NoSuchAlgorithmException, IllegalBlockSizeException, BadPaddingException, SignatureException, InvalidKeyException {
+    public static byte[] generateFileHashcode() throws IOException, NoSuchPaddingException, NoSuchAlgorithmException, IllegalBlockSizeException, BadPaddingException, SignatureException, InvalidKeyException {
         HashDocument encryAndValidate = new HashDocument();
         byte[] a =encryAndValidate.shaHash();
-        PrivateKey privateKey = GenerateKey.generatePrivateKey(user.getPrivateKey());
 
-        byte[] encryptedCode =  Keys.encrypt(privateKey, a);
-        return encryptedCode;
+        return a;
     }
+
+
     public static void main(String[] args) throws IOException, NoSuchAlgorithmException, NoSuchProviderException, IllegalBlockSizeException, NoSuchPaddingException, BadPaddingException, SignatureException, InvalidKeyException {
         System.out.println("-------");
         HashDocument encryAndValidate = new HashDocument();

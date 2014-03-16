@@ -4,6 +4,7 @@ import entity.ConnectionMsg;
 import entity.UploadFilePackage;
 import entity.User;
 
+import keyPairs.GenerateKey;
 import keyPairs.HashDocument;
 import org.apache.http.entity.ContentType;
 import org.codehaus.jackson.annotate.JsonAutoDetect;
@@ -48,6 +49,7 @@ public class ClientRest {
     private static final String REST_SERVICE_URL_USER = "http://localhost:8080/TTPService/requsetForConection";
     private static final String REST_SERVICE_URL = "http://localhost:8080/userService";
     private static final String REST_SERCICE_URL_UPLOADFILE = "http://localhost:8080/TTPService/uploadFile";
+    private static final String REST_SERCICE_URL_UPLOADFILESERVICE = "http://localhost:8080/TTPService/uploadFileService";
     private static final String FILE_ROUTE = "D:\\1.txt";
     Client client = ClientBuilder.newClient().register(JacksonFeature.class);
 
@@ -89,12 +91,17 @@ public class ClientRest {
         uploadFile();
         UploadFilePackage uploadFilePackage = new UploadFilePackage();
         uploadFilePackage.setLabel(label);
-        uploadFilePackage.setSignatureOfUser(HashDocument.generateFileHashcode(user));
+        uploadFilePackage.setSignatureOfUser(GenerateKey.encryptFileHashCode(GenerateKey.generatePrivateKey(user.getPrivateKey()),HashDocument.generateFileHashcode()));
         Document document = new Document();
         document.setSenderName(user.getUserEmailAddress());
         document.setFileName("1.txt");
         document.setReceiverName("111@aa.com");
         uploadFilePackage.setDocument(document);
+
+        String response =  client.target(REST_SERCICE_URL_UPLOADFILESERVICE).request().post(Entity.entity(uploadFilePackage, MediaType.APPLICATION_JSON), String.class);
+
+        System.out.println(response);
+
     }
 
 

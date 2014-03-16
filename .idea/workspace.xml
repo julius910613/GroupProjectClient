@@ -4,13 +4,13 @@
     <list default="true" id="2189eda0-ec4e-41c8-8230-6def4ffb6116" name="Default" comment="" />
     <ignored path="client.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="2189eda0-ec4e-41c8-8230-6def4ffb6116" time="1394737975081" ignored="false" />
+    <file path="/Dummy.txt" changelist="2189eda0-ec4e-41c8-8230-6def4ffb6116" time="1394962893259" ignored="false" />
     <file path="/User.java" changelist="2189eda0-ec4e-41c8-8230-6def4ffb6116" time="1394792960237" ignored="false" />
-    <file path="/GenerateKey.java" changelist="2189eda0-ec4e-41c8-8230-6def4ffb6116" time="1394738909768" ignored="false" />
-    <file path="/test.java" changelist="2189eda0-ec4e-41c8-8230-6def4ffb6116" time="1394818101663" ignored="false" />
+    <file path="/GenerateKey.java" changelist="2189eda0-ec4e-41c8-8230-6def4ffb6116" time="1394964459566" ignored="false" />
+    <file path="/test.java" changelist="2189eda0-ec4e-41c8-8230-6def4ffb6116" time="1394965519223" ignored="false" />
     <file path="$PROJECT_DIR$/../GroupProject/src/main/java/dataset/UserData.java" changelist="2189eda0-ec4e-41c8-8230-6def4ffb6116" time="1394792722863" ignored="false" />
-    <file path="$PROJECT_DIR$/../GroupProject/src/main/java/service/TTPService.java" changelist="2189eda0-ec4e-41c8-8230-6def4ffb6116" time="1394893903705" ignored="false" />
-    <file path="/TTPService.java" changelist="2189eda0-ec4e-41c8-8230-6def4ffb6116" time="1394893890435" ignored="false" />
+    <file path="$PROJECT_DIR$/../GroupProject/src/main/java/service/TTPService.java" changelist="2189eda0-ec4e-41c8-8230-6def4ffb6116" time="1394986482293" ignored="false" />
+    <file path="/TTPService.java" changelist="2189eda0-ec4e-41c8-8230-6def4ffb6116" time="1394985829488" ignored="false" />
     <file path="/fragment.java" changelist="2189eda0-ec4e-41c8-8230-6def4ffb6116" time="1394892655430" ignored="false" />
     <file path="$PROJECT_DIR$/../GroupProject/src/main/java/model/Keys.java" changelist="2189eda0-ec4e-41c8-8230-6def4ffb6116" time="1394792722863" ignored="false" />
     <file path="$PROJECT_DIR$/../GroupProject/src/main/java/data/GenerateKey.java" changelist="2189eda0-ec4e-41c8-8230-6def4ffb6116" time="1394792813520" ignored="false" />
@@ -18,19 +18,24 @@
     <file path="$PROJECT_DIR$/../GroupProject/src/main/java/model/User.java" changelist="2189eda0-ec4e-41c8-8230-6def4ffb6116" time="1394792975628" ignored="false" />
     <file path="$PROJECT_DIR$/../GroupProject/src/main/java/model/ConnectionMsg.java" changelist="2189eda0-ec4e-41c8-8230-6def4ffb6116" time="1394794698973" ignored="false" />
     <file path="/ConnectionMsg.java" changelist="2189eda0-ec4e-41c8-8230-6def4ffb6116" time="1394794010711" ignored="false" />
-    <file path="/ClientRest.java" changelist="2189eda0-ec4e-41c8-8230-6def4ffb6116" time="1394892084742" ignored="false" />
+    <file path="/ClientRest.java" changelist="2189eda0-ec4e-41c8-8230-6def4ffb6116" time="1394965376559" ignored="false" />
     <file path="/UserSign.java" changelist="2189eda0-ec4e-41c8-8230-6def4ffb6116" time="1394796959198" ignored="false" />
-    <file path="/HashDocument.java" changelist="2189eda0-ec4e-41c8-8230-6def4ffb6116" time="1394893139348" ignored="false" />
+    <file path="/HashDocument.java" changelist="2189eda0-ec4e-41c8-8230-6def4ffb6116" time="1394982578520" ignored="false" />
     <file path="$PROJECT_DIR$/../GroupProject/src/main/java/model/FileUploadForm.java" changelist="2189eda0-ec4e-41c8-8230-6def4ffb6116" time="1394806584390" ignored="false" />
     <file path="/FileUploadForm.java" changelist="2189eda0-ec4e-41c8-8230-6def4ffb6116" time="1394806565359" ignored="false" />
     <file path="$PROJECT_DIR$/../GroupProject/pom.xml" changelist="2189eda0-ec4e-41c8-8230-6def4ffb6116" time="1394887856116" ignored="false" />
     <file path="/UploadFilePackage.java" changelist="2189eda0-ec4e-41c8-8230-6def4ffb6116" time="1394893858784" ignored="false" />
-    <file path="$PROJECT_DIR$/../GroupProject/src/main/java/data/HashDocument.java" changelist="2189eda0-ec4e-41c8-8230-6def4ffb6116" time="1394893387152" ignored="false" />
+    <file path="$PROJECT_DIR$/../GroupProject/src/main/java/data/HashDocument.java" changelist="2189eda0-ec4e-41c8-8230-6def4ffb6116" time="1394982582023" ignored="false" />
     <file path="$PROJECT_DIR$/../GroupProject/src/main/java/model/UploadFilePackage.java" changelist="2189eda0-ec4e-41c8-8230-6def4ffb6116" time="1394893869372" ignored="false" />
-    <file path="/TransactionRecord.java" changelist="2189eda0-ec4e-41c8-8230-6def4ffb6116" time="1394893922529" ignored="false" />
-    <file path="$PROJECT_DIR$/../GroupProject/src/main/java/model/TransactionRecord.java" changelist="2189eda0-ec4e-41c8-8230-6def4ffb6116" time="1394893947079" ignored="false" />
+    <file path="/TransactionRecord.java" changelist="2189eda0-ec4e-41c8-8230-6def4ffb6116" time="1394985799141" ignored="false" />
+    <file path="$PROJECT_DIR$/../GroupProject/src/main/java/model/TransactionRecord.java" changelist="2189eda0-ec4e-41c8-8230-6def4ffb6116" time="1394985806709" ignored="false" />
     <file path="/FileArrivalMsg.java" changelist="2189eda0-ec4e-41c8-8230-6def4ffb6116" time="1394893980733" ignored="false" />
     <file path="$PROJECT_DIR$/../GroupProject/src/main/java/model/FileArrivalMsg.java" changelist="2189eda0-ec4e-41c8-8230-6def4ffb6116" time="1394893991044" ignored="false" />
+    <file path="$PROJECT_DIR$/.idea/workspace.xml" changelist="2189eda0-ec4e-41c8-8230-6def4ffb6116" time="1394986885363" ignored="false" />
+    <file path="$PROJECT_DIR$/../GroupProject/src/main/java/data/TransactionRecordRepository.java" changelist="2189eda0-ec4e-41c8-8230-6def4ffb6116" time="1394970088856" ignored="false" />
+    <file path="/TransactionRecordRepository.java" changelist="2189eda0-ec4e-41c8-8230-6def4ffb6116" time="1394970088856" ignored="false" />
+    <file path="$PROJECT_DIR$/../GroupProject/src/main/java/model/RequireDocumentMsg.java" changelist="2189eda0-ec4e-41c8-8230-6def4ffb6116" time="1394970142332" ignored="false" />
+    <file path="/RequireDocumentMsg.java" changelist="2189eda0-ec4e-41c8-8230-6def4ffb6116" time="1394970132814" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,7 +50,6 @@
     <disable_hints />
   </component>
   <component name="DebuggerManager">
-    <line_breakpoints default_suspend_policy="SuspendAll" default_condition_enabled="true" />
     <ui_properties default_suspend_policy="SuspendAll" default_condition_enabled="true" />
     <breakpoint_any default_suspend_policy="SuspendAll" default_condition_enabled="true">
       <breakpoint>
@@ -83,6 +87,7 @@
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
     </breakpoint_any>
+    <line_breakpoints default_suspend_policy="SuspendAll" default_condition_enabled="true" />
     <breakpoint_rules />
     <ui_properties />
   </component>
@@ -95,10 +100,8 @@
       <file leaf-file-name="ClientRest.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/clientRest/ClientRest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="94" column="61" selection-start="3540" selection-end="3540" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state line="100" column="33" selection-start="3900" selection-end="3906" vertical-scroll-proportion="0.0">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -115,7 +118,7 @@
       <file leaf-file-name="UploadFilePackage.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/entity/UploadFilePackage.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="16" column="16" selection-start="317" selection-end="317" vertical-scroll-proportion="0.0">
+            <state line="21" column="32" selection-start="442" selection-end="450" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -124,7 +127,7 @@
       <file leaf-file-name="ContentType.class" pinned="false" current="false" current-in-tab="false">
         <entry file="jar://$MAVEN_REPOSITORY$/org/apache/httpcomponents/httpcore/4.3.2/httpcore-4.3.2.jar!/org/apache/http/entity/ContentType.class">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="7" column="19" selection-start="209" selection-end="209" vertical-scroll-proportion="-4.56">
+            <state line="7" column="19" selection-start="209" selection-end="209" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -133,16 +136,25 @@
       <file leaf-file-name="client.iml" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/client.iml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="44" column="0" selection-start="3397" selection-end="3397" vertical-scroll-proportion="0.0">
+            <state line="55" column="0" selection-start="4697" selection-end="4697" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="test.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="test.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/keyPairs/test.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="53" column="77" selection-start="2230" selection-end="2285" vertical-scroll-proportion="0.6551724">
+            <state line="33" column="43" selection-start="1095" selection-end="1115" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="HashDocument.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/keyPairs/HashDocument.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="45" column="96" selection-start="1361" selection-end="1361" vertical-scroll-proportion="0.07692308">
               <folding />
             </state>
           </provider>
@@ -151,16 +163,7 @@
       <file leaf-file-name="pom.xml" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pom.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="41" column="115" selection-start="1587" selection-end="1587" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="HashDocument.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/keyPairs/HashDocument.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="50" column="25" selection-start="1081" selection-end="1499" vertical-scroll-proportion="0.0">
+            <state line="14" column="78" selection-start="606" selection-end="606" vertical-scroll-proportion="-10.64">
               <folding />
             </state>
           </provider>
@@ -169,7 +172,7 @@
       <file leaf-file-name="GenerateKey.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/keyPairs/GenerateKey.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="17" column="24" selection-start="477" selection-end="488" vertical-scroll-proportion="0.0">
+            <state line="57" column="0" selection-start="2209" selection-end="2209" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -200,15 +203,15 @@
         <option value="$PROJECT_DIR$/src/main/java/clientRest/clientRest.java" />
         <option value="$PROJECT_DIR$/src/main/java/keyPairs/Keys.java" />
         <option value="$PROJECT_DIR$/src/main/java/dataoperation/GenerateKey.java" />
-        <option value="$PROJECT_DIR$/src/main/java/keyPairs/GenerateKey.java" />
         <option value="$PROJECT_DIR$/src/main/java/entity/User.java" />
         <option value="$PROJECT_DIR$/src/main/java/entity/ConnectionMsg.java" />
         <option value="$PROJECT_DIR$/src/main/java/entity/UserSign.java" />
+        <option value="$PROJECT_DIR$/src/main/java/entity/UploadFilePackage.java" />
+        <option value="$PROJECT_DIR$/src/main/java/entity/Document.java" />
+        <option value="$PROJECT_DIR$/src/main/java/keyPairs/GenerateKey.java" />
+        <option value="$PROJECT_DIR$/src/main/java/keyPairs/HashDocument.java" />
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/src/main/java/keyPairs/test.java" />
-        <option value="$PROJECT_DIR$/src/main/java/entity/UploadFilePackage.java" />
-        <option value="$PROJECT_DIR$/src/main/java/keyPairs/HashDocument.java" />
-        <option value="$PROJECT_DIR$/src/main/java/entity/Document.java" />
         <option value="$PROJECT_DIR$/src/main/java/clientRest/ClientRest.java" />
       </list>
     </option>
@@ -245,6 +248,7 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -365,7 +369,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
       <pane id="Scope" />
     </panes>
   </component>
@@ -382,8 +385,8 @@
     <property name="GoToClass.toSaveIncludeLibraries" value="false" />
     <property name="findjar.last.used.dir" value="$PROJECT_DIR$/../GroupProject" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="FullScreen" value="false" />
     <property name="MemberChooser.showClasses" value="true" />
+    <property name="FullScreen" value="false" />
     <property name="GoToClass.includeLibraries" value="false" />
     <property name="dynamic.classpath" value="false" />
   </component>
@@ -393,12 +396,6 @@
     </key>
   </component>
   <component name="RunManager" selected="Application.test">
-    <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
-      <module name="" />
-      <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m -ea" />
-      <option name="PROGRAM_PARAMETERS" />
-      <method />
-    </configuration>
     <configuration default="true" type="GrailsRunConfigurationType" factoryName="Grails">
       <module name="" />
       <setting name="vmparams" value="" />
@@ -407,6 +404,12 @@
       <setting name="passParentEnv" value="true" />
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <setting name="launchBrowser" value="false" />
+      <method />
+    </configuration>
+    <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
+      <module name="" />
+      <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m -ea" />
+      <option name="PROGRAM_PARAMETERS" />
       <method />
     </configuration>
     <configuration default="true" type="AndroidTestRunConfigurationType" factoryName="Android Tests">
@@ -448,6 +451,35 @@
       <option name="trusted" value="true" />
       <method />
     </configuration>
+    <configuration default="true" type="CucumberJavaRunConfigurationType" factoryName="Cucumber java">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <option name="GLUE" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <module name="" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <method />
+    </configuration>
     <configuration default="true" type="TestNG" factoryName="TestNG">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <module name="" />
@@ -474,35 +506,6 @@
       <envs />
       <properties />
       <listeners />
-      <method />
-    </configuration>
-    <configuration default="true" type="Applet" factoryName="Applet">
-      <module name="" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="HTML_FILE_NAME" />
-      <option name="HTML_USED" value="false" />
-      <option name="WIDTH" value="400" />
-      <option name="HEIGHT" value="300" />
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <option name="VM_PARAMETERS" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <method />
-    </configuration>
-    <configuration default="true" type="CucumberJavaRunConfigurationType" factoryName="Cucumber java">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
-      <option name="GLUE" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="VM_PARAMETERS" />
-      <option name="PROGRAM_PARAMETERS" />
-      <option name="WORKING_DIRECTORY" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="ENABLE_SWING_INSPECTOR" value="false" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <module name="" />
-      <envs />
       <method />
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
@@ -541,6 +544,22 @@
       <patterns />
       <method />
     </configuration>
+    <configuration default="true" type="AndroidRunConfigurationType" factoryName="Android Application">
+      <module name="" />
+      <option name="ACTIVITY_CLASS" value="" />
+      <option name="MODE" value="default_activity" />
+      <option name="DEPLOY" value="true" />
+      <option name="TARGET_SELECTION_MODE" value="EMULATOR" />
+      <option name="PREFERRED_AVD" value="" />
+      <option name="USE_COMMAND_LINE" value="true" />
+      <option name="COMMAND_LINE" value="" />
+      <option name="WIPE_USER_DATA" value="false" />
+      <option name="DISABLE_BOOT_ANIMATION" value="false" />
+      <option name="NETWORK_SPEED" value="full" />
+      <option name="NETWORK_LATENCY" value="none" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <method />
+    </configuration>
     <configuration default="true" type="FlashRunConfigurationType" factoryName="Flash App">
       <option name="BCName" value="" />
       <option name="IOSSimulatorSdkPath" value="" />
@@ -573,22 +592,6 @@
       <option name="screenWidth" value="0" />
       <option name="url" value="http://" />
       <option name="usbDebugPort" value="7936" />
-      <method />
-    </configuration>
-    <configuration default="true" type="AndroidRunConfigurationType" factoryName="Android Application">
-      <module name="" />
-      <option name="ACTIVITY_CLASS" value="" />
-      <option name="MODE" value="default_activity" />
-      <option name="DEPLOY" value="true" />
-      <option name="TARGET_SELECTION_MODE" value="EMULATOR" />
-      <option name="PREFERRED_AVD" value="" />
-      <option name="USE_COMMAND_LINE" value="true" />
-      <option name="COMMAND_LINE" value="" />
-      <option name="WIPE_USER_DATA" value="false" />
-      <option name="DISABLE_BOOT_ANIMATION" value="false" />
-      <option name="NETWORK_SPEED" value="full" />
-      <option name="NETWORK_LATENCY" value="none" />
-      <option name="CLEAR_LOGCAT" value="false" />
       <method />
     </configuration>
     <configuration default="false" name="test" type="Application" factoryName="Application">
@@ -644,14 +647,14 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1335" height="1400" extended-state="0" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39983305" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3996777" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -763,7 +766,9 @@
     <entry file="file://$PROJECT_DIR$/src/main/java/entity/User.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="20" column="0" selection-start="297" selection-end="297" vertical-scroll-proportion="0.0">
-          <folding />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -774,58 +779,16 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/entity/UserSign.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="34" selection-start="417" selection-end="433" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/keyPairs/GenerateKey.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="24" selection-start="477" selection-end="488" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/client.iml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="44" column="0" selection-start="3397" selection-end="3397" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="41" column="115" selection-start="1587" selection-end="1587" vertical-scroll-proportion="0.0">
+        <state line="55" column="0" selection-start="4697" selection-end="4697" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="jar://$MAVEN_REPOSITORY$/org/apache/httpcomponents/httpcore/4.3.2/httpcore-4.3.2.jar!/org/apache/http/entity/ContentType.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="19" selection-start="209" selection-end="209" vertical-scroll-proportion="-4.56">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/keyPairs/Keys.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="54" column="112" selection-start="1466" selection-end="1466" vertical-scroll-proportion="0.12820514">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/entity/User.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="64" column="5" selection-start="1504" selection-end="1549" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/entity/UploadFilePackage.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="16" selection-start="317" selection-end="317" vertical-scroll-proportion="0.0">
+        <state line="7" column="19" selection-start="209" selection-end="209" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -837,25 +800,67 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/keyPairs/HashDocument.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/keyPairs/GenerateKey.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="50" column="25" selection-start="1081" selection-end="1499" vertical-scroll-proportion="0.0">
+        <state line="57" column="0" selection-start="2209" selection-end="2209" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/clientRest/ClientRest.java">
+    <entry file="file://$PROJECT_DIR$/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="94" column="61" selection-start="3540" selection-end="3540" vertical-scroll-proportion="0.0">
+        <state line="14" column="78" selection-start="606" selection-end="606" vertical-scroll-proportion="-10.64">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/entity/UserSign.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="16" column="34" selection-start="417" selection-end="433" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/entity/User.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="29" column="63" selection-start="877" selection-end="877" vertical-scroll-proportion="-19.76">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/keyPairs/Keys.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="62" column="77" selection-start="1877" selection-end="1877" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/entity/UploadFilePackage.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="21" column="32" selection-start="442" selection-end="450" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/clientRest/ClientRest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="100" column="33" selection-start="3900" selection-end="3906" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/keyPairs/test.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="53" column="77" selection-start="2230" selection-end="2285" vertical-scroll-proportion="0.6551724">
+        <state line="33" column="43" selection-start="1095" selection-end="1115" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/keyPairs/HashDocument.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="45" column="96" selection-start="1361" selection-end="1361" vertical-scroll-proportion="0.07692308">
           <folding />
         </state>
       </provider>

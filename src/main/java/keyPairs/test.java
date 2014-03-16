@@ -25,19 +25,16 @@ public class test {
 
         PrivateKey privateKey = GenerateKey.generatePrivateKey(user.getPrivateKey());
         user.generateSign(privateKey);
-        System.out.println(new String(user.getSign(),"UTF-8"));
+    //    System.out.println(new String(user.getSign(),"UTF-8"));
 
+
+          clientRest.requestForConnect(user);
+       // clientRest.requestForConnect(user);
         try {
-            System.out.println(HashDocument.generateFileHashcode().length);
-            clientRest.uploadFile();
-        } catch (IOException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            clientRest.requestForUploadFile(user);
         } catch (Exception e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
-          clientRest.requestForConnect(user);
-       // clientRest.requestForConnect(user);
-
 
 
 //        X509EncodedKeySpec pubString = new X509EncodedKeySpec(user.getPublicKey());

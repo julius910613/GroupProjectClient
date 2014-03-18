@@ -31,7 +31,7 @@ public class UserSign {
 
     public byte[] generateSign(PrivateKey privateKey){
         try {
-             sign= Keys.encrypt(privateKey,userEmailAddress.getBytes());
+             this.sign= Keys.encrypt(privateKey,userEmailAddress.getBytes());
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         } catch (InvalidKeyException e) {

@@ -1,6 +1,7 @@
 package keyPairs;
 
 import clientRest.ClientRest;
+import entity.FileArrivalMsg;
 import entity.User;
 
 import javax.crypto.BadPaddingException;
@@ -12,29 +13,40 @@ import java.security.*;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
  * Created by xwen on 3/12/14.
  */
 public class test {
-    public static void main(String[] args) throws UnsupportedEncodingException {
+    public static void main(String[] args) throws IOException, NoSuchPaddingException, NoSuchAlgorithmException, BadPaddingException, SignatureException, InvalidKeyException, IllegalBlockSizeException {
         ClientRest clientRest=new ClientRest();
         User user = new User("123@gmail.com", 1024);
+
     //    System.out.println(user.getPublicKey().toString());
 
         PrivateKey privateKey = GenerateKey.generatePrivateKey(user.getPrivateKey());
-        user.generateSign(privateKey);
+        PublicKey publicKey = GenerateKey.generatePublicKey(user.getPublicKey());
+        user.setSign(user.generateSign(privateKey));
+        byte[] a = user.getSign();
     //    System.out.println(new String(user.getSign(),"UTF-8"));
 
 
           clientRest.requestForConnect(user);
-       // clientRest.requestForConnect(user);
+          //clientRest.requestForConnect(user);
         try {
             clientRest.requestForUploadFile(user);
         } catch (Exception e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
+        ArrayList<FileArrivalMsg> fileArrivalMsgs = clientRest.getFlieArrivalMsg(user);
+        byte[] b =Keys.decrypt(publicKey,clientRest.getSignOfA("1",fileArrivalMsgs));
+        System.out.println(Arrays.equals(a,b));
+
+
+
+
 
 
 //        X509EncodedKeySpec pubString = new X509EncodedKeySpec(user.getPublicKey());

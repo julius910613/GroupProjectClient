@@ -28,6 +28,7 @@ import java.net.URL;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SignatureException;
+import java.util.ArrayList;
 
 import entity.*;
 
@@ -50,7 +51,8 @@ public class ClientRest {
     private static final String REST_SERVICE_URL = "http://localhost:8080/userService";
     private static final String REST_SERCICE_URL_UPLOADFILE = "http://localhost:8080/TTPService/uploadFile";
     private static final String REST_SERCICE_URL_UPLOADFILESERVICE = "http://localhost:8080/TTPService/uploadFileService";
-    private static final String FILE_ROUTE = "D:\\1.txt";
+    private static final String REST_SERCICE_URL_NOTICE = "http://localhost:8080/TTPService/noticeOfFileArrivalService";
+    private static final String FILE_ROUTE = "/home/xwen/Downloads/test";
     Client client = ClientBuilder.newClient().register(JacksonFeature.class);
 
     public void addUser(User user) {
@@ -75,42 +77,57 @@ public class ClientRest {
         }
     }
 
+    public ArrayList<FileArrivalMsg> getFlieArrivalMsg(User user) {
+        ArrayList<FileArrivalMsg> arrivalMsgs = client.target(REST_SERCICE_URL_NOTICE).request().post(Entity.entity(user,MediaType.APPLICATION_JSON),ArrayList.class);
+
+        return arrivalMsgs;
+    }
+    public byte[] getSignOfA(String label,ArrayList<FileArrivalMsg> fileArrivalMsgs){
+        for(FileArrivalMsg arrivalMsg:fileArrivalMsgs){
+            if(arrivalMsg.getLabel().equals(label)){
+                return arrivalMsg.getSenderSignature();
+            }
+        }
+        return null;
+    }
+
     public void requestForConnect(User user) {
 
         ConnectionMsg cm = client.target(REST_SERVICE_URL_USER).request().post(Entity.entity(user, MediaType.APPLICATION_JSON), ConnectionMsg.class);
         System.out.println(cm.isAccessPermission());
-        if(cm.isAccessPermission() == true){
+        if (cm.isAccessPermission() == true) {
             label = cm.getLabel();
+            //System.out.println("label"+label);
 
         }
 
     }
 
+
     public void requestForUploadFile(User user) throws Exception {
 
         uploadFile();
         UploadFilePackage uploadFilePackage = new UploadFilePackage();
-        uploadFilePackage.setLabel(label);
-        uploadFilePackage.setSignatureOfUser(GenerateKey.encryptFileHashCode(GenerateKey.generatePrivateKey(user.getPrivateKey()),HashDocument.generateFileHashcode()));
+        uploadFilePackage.setLabel("1");
+        uploadFilePackage.setSignatureOfUser(GenerateKey.encryptFileHashCode(GenerateKey.generatePrivateKey(user.getPrivateKey()), HashDocument.generateFileHashcode()));
         Document document = new Document();
         document.setSenderName(user.getUserEmailAddress());
-        document.setFileName("1.txt");
+        document.setFileName("test");
         document.setReceiverName("111@aa.com");
         uploadFilePackage.setDocument(document);
 
-        String response =  client.target(REST_SERCICE_URL_UPLOADFILESERVICE).request().post(Entity.entity(uploadFilePackage, MediaType.APPLICATION_JSON), String.class);
+        String response = client.target(REST_SERCICE_URL_UPLOADFILESERVICE).request().post(Entity.entity(uploadFilePackage, MediaType.APPLICATION_JSON), String.class);
 
         System.out.println(response);
 
     }
 
 
-
     public void uploadFile() throws Exception {
 
         File file = new File(FILE_ROUTE);
         //Upload the file
-        executeMultiPartRequest(REST_SERCICE_URL_UPLOADFILE,file, file.getName(), "File Uploaded :: Tulips.jpg");
+        executeMultiPartRequest(REST_SERCICE_URL_UPLOADFILE, file, file.getName(), "File Uploaded :: Tulips.jpg");
     }
 
     public void executeMultiPartRequest(String urlString, File file, String fileName, String fileDescription) throws Exception {
@@ -119,7 +136,7 @@ public class ClientRest {
         try {
             //Set various attributes
             MultipartEntity multiPartEntity = new MultipartEntity();
-          multiPartEntity.addPart("fileDescription", new StringBody(fileDescription != null ? fileDescription : fileDescription));
+            multiPartEntity.addPart("fileDescription", new StringBody(fileDescription != null ? fileDescription : fileDescription));
             multiPartEntity.addPart("fileName", new StringBody(fileName != null ? fileName : file.getName()));
 
             FileBody fileBody = new FileBody(file, ContentType.APPLICATION_OCTET_STREAM);

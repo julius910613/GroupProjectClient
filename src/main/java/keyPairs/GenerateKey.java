@@ -18,7 +18,7 @@ import java.security.spec.X509EncodedKeySpec;
 public class GenerateKey {
     public static PublicKey generatePublicKey(byte[] publicByte) {
         X509EncodedKeySpec publicString = new X509EncodedKeySpec(publicByte);
-        KeyFactory keyFactory = null;
+        KeyFactory keyFactory;
 
         PublicKey publicKey = null;
         try {
@@ -35,19 +35,19 @@ public class GenerateKey {
 
     public static PrivateKey generatePrivateKey(byte[] privateByte) {
         PKCS8EncodedKeySpec publicString = new PKCS8EncodedKeySpec(privateByte);
-        KeyFactory keyFactory = null;
+        KeyFactory keyFactory;
 
-        PrivateKey publicKey = null;
+        PrivateKey privateKey = null;
         try {
             keyFactory = KeyFactory.getInstance("RSA");
-            publicKey = keyFactory.generatePrivate(publicString);
+            privateKey = keyFactory.generatePrivate(publicString);
 
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         } catch (InvalidKeySpecException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
-        return publicKey;
+        return privateKey;
     }
 
     public static byte[] encryptFileHashCode(PrivateKey privateKey, byte[] file) throws NoSuchPaddingException, NoSuchAlgorithmException, IllegalBlockSizeException, BadPaddingException, SignatureException, InvalidKeyException {

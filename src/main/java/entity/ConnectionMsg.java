@@ -12,7 +12,7 @@ public class ConnectionMsg {
     private boolean accessPermission;
 
     private String label;
-
+    public ConnectionMsg(){}
 
     public boolean isAccessPermission() {
         return accessPermission;

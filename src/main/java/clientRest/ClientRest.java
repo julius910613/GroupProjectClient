@@ -6,6 +6,7 @@ import entity.User;
 
 import keyPairs.GenerateKey;
 import keyPairs.HashDocument;
+import keyPairs.Keys;
 import org.apache.http.entity.ContentType;
 import org.codehaus.jackson.annotate.JsonAutoDetect;
 import org.codehaus.jackson.annotate.JsonMethod;
@@ -27,6 +28,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.security.PrivateKey;
 import java.security.SignatureException;
 import java.util.ArrayList;
 
@@ -52,7 +54,7 @@ public class ClientRest {
     private static final String REST_SERCICE_URL_UPLOADFILE = "http://localhost:8080/TTPService/uploadFile";
     private static final String REST_SERCICE_URL_UPLOADFILESERVICE = "http://localhost:8080/TTPService/uploadFileService";
     private static final String REST_SERCICE_URL_NOTICE = "http://localhost:8080/TTPService/noticeOfFileArrivalService";
-    private static final String FILE_ROUTE = "/home/xwen/Downloads/test";
+    private static final String FILE_ROUTE = "H:\\CSC8109\\test.txt";
     Client client = ClientBuilder.newClient().register(JacksonFeature.class);
 
     public void addUser(User user) {
@@ -76,19 +78,28 @@ public class ClientRest {
             return true;
         }
     }
-
+//    class aaa extends ArrayList<FileArrivalMsg>{
+//        public aaa(){
+//            super();
+//        }
+//    }
     public ArrayList<FileArrivalMsg> getFlieArrivalMsg(User user) {
         ArrayList<FileArrivalMsg> arrivalMsgs = client.target(REST_SERCICE_URL_NOTICE).request().post(Entity.entity(user,MediaType.APPLICATION_JSON),ArrayList.class);
+//        String arrivalMsgs = client.target(REST_SERCICE_URL_NOTICE).request().post(Entity.entity(user,MediaType.APPLICATION_JSON),String.class);
 
         return arrivalMsgs;
     }
-    public byte[] getSignOfA(String label,ArrayList<FileArrivalMsg> fileArrivalMsgs){
-        for(FileArrivalMsg arrivalMsg:fileArrivalMsgs){
-            if(arrivalMsg.getLabel().equals(label)){
-                return arrivalMsg.getSenderSignature();
-            }
-        }
-        return null;
+    public byte[] getEOO(String label){
+        byte[] b=client.target(REST_SERCICE_URL_NOTICE).request().post(Entity.entity(label, MediaType.APPLICATION_JSON_TYPE), byte[].class);
+        return b;
+    }
+    public UploadFilePackage uploadEOR(String label) throws NoSuchPaddingException, NoSuchAlgorithmException, IllegalBlockSizeException, BadPaddingException, SignatureException, InvalidKeyException {
+        //UploadFilePackage uploadFilePackage=new UploadFilePackage();
+        TransactionRecord t1 = client.target(REST_SERCICE_URL_UPLOADFILESERVICE).path("/{label}").resolveTemplate("label",label).request().get(TransactionRecord.class);
+        User user=client.target(REST_SERVICE_URL_USER).path("/{userEmailAddress}").resolveTemplate("userEmailAddress",t1.getDocument().getReceiverName()).request().get(User.class);
+        PrivateKey privateKey = GenerateKey.generatePrivateKey(user.getPrivateKey());
+        t1.setReceiverSignature(Keys.encrypt(privateKey,HashDocument.generateHash(getEOO(label))));
+        client.target(REST_SERCICE_URL_UPLOADFILESERVICE).request().post(Entity.entity(t1, MediaType.APPLICATION_JSON_TYPE), TransactionRecord.class);
     }
 
     public void requestForConnect(User user) {
@@ -112,7 +123,7 @@ public class ClientRest {
         uploadFilePackage.setSignatureOfUser(GenerateKey.encryptFileHashCode(GenerateKey.generatePrivateKey(user.getPrivateKey()), HashDocument.generateFileHashcode()));
         Document document = new Document();
         document.setSenderName(user.getUserEmailAddress());
-        document.setFileName("test");
+        document.setFileName("test.txt");
         document.setReceiverName("111@aa.com");
         uploadFilePackage.setDocument(document);
 
@@ -156,6 +167,29 @@ public class ClientRest {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+    }
+
+    public byte[] sendEOR(byte[]EOO, String label, User user){
+        PrivateKey privateKey=GenerateKey.generatePrivateKey(user.getPrivateKey());
+        byte[] bytes=HashDocument.generateHash(EOO);
+        try {
+            byte[] b= GenerateKey.encryptFileHashCode(privateKey,bytes);
+            return b;
+        } catch (NoSuchPaddingException e) {
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (IllegalBlockSizeException e) {
+            e.printStackTrace();
+        } catch (BadPaddingException e) {
+            e.printStackTrace();
+        } catch (SignatureException e) {
+            e.printStackTrace();
+        } catch (InvalidKeyException e) {
+            e.printStackTrace();
+        }
+        return null;
+
     }
 
 

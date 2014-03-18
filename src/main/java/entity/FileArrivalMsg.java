@@ -11,7 +11,7 @@ public class FileArrivalMsg {
 
 
 
-    private byte[] senderSignature;
+    private byte[] EOO;
 
     public String getLabel() {
         return label;
@@ -21,15 +21,12 @@ public class FileArrivalMsg {
         this.label = label;
     }
 
-
-
-
-    public byte[] getSenderSignature() {
-        return senderSignature;
+    public byte[] getEOO() {
+        return EOO;
     }
 
-    public void setSenderSignature(byte[] senderSignature) {
-        this.senderSignature = senderSignature;
+    public void setEOO(byte[] EOO) {
+        this.EOO = EOO;
     }
 }
 

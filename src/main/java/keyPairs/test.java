@@ -9,12 +9,14 @@ import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Array;
 import java.security.*;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 
 /**
  * Created by xwen on 3/12/14.
@@ -40,9 +42,30 @@ public class test {
         } catch (Exception e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
-        ArrayList<FileArrivalMsg> fileArrivalMsgs = clientRest.getFlieArrivalMsg(user);
-        byte[] b =Keys.decrypt(publicKey,clientRest.getSignOfA("1",fileArrivalMsgs));
-        System.out.println(Arrays.equals(a,b));
+
+        User receiver = new User("111@aa.com", 1024);
+        try {
+            PrivateKey privateKey1 = GenerateKey.generatePrivateKey(receiver.getPrivateKey());
+            receiver.setSign(user.generateSign(privateKey1));
+            clientRest.requestForConnect(receiver);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+            System.out.println("Get EOO");
+
+            byte[] EOO=clientRest.getEOO("1");
+            System.out.println(EOO.length);
+            byte[] b =Keys.encrypt(GenerateKey.generatePrivateKey(receiver.getPrivateKey()),HashDocument.generateHash(EOO));
+            byte[] c =Keys.decrypt(GenerateKey.generatePublicKey(receiver.getPublicKey()),b);
+        System.out.println(Arrays.equals(HashDocument.generateHash(EOO),c));
+
+
+
+
+
+        System.out.println("------------------------");
 
 
 

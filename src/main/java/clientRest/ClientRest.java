@@ -20,17 +20,14 @@ import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.*;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.SignatureException;
-import java.util.ArrayList;
+import java.util.*;
 
 import entity.*;
 
@@ -54,7 +51,10 @@ public class ClientRest {
     private static final String REST_SERCICE_URL_UPLOADFILE = "http://localhost:8080/TTPService/uploadFile";
     private static final String REST_SERCICE_URL_UPLOADFILESERVICE = "http://localhost:8080/TTPService/uploadFileService";
     private static final String REST_SERCICE_URL_NOTICE = "http://localhost:8080/TTPService/noticeOfFileArrivalService";
-    private static final String FILE_ROUTE = "H:\\CSC8109\\test.txt";
+    private static final String REST_SERVICE_GETEOOBYLEBEL = "http://localhost:8080/TTPService/getSignatureByLabel";
+    private static final String REST_SERVICE_GETFILE = "http://localhost:8080/TTPService/requireGetDocumentService";
+    private static final String REST_SERVICE_GETRECEIPT = "http://localhost:8080/TTPService/requireGetReceiptService";
+    private static final String FILE_ROUTE = "D:\\1.txt";
     Client client = ClientBuilder.newClient().register(JacksonFeature.class);
 
     public void addUser(User user) {
@@ -83,14 +83,27 @@ public class ClientRest {
 //            super();
 //        }
 //    }
-    public ArrayList<FileArrivalMsg> getFlieArrivalMsg(User user) {
-        ArrayList<FileArrivalMsg> arrivalMsgs = client.target(REST_SERCICE_URL_NOTICE).request().post(Entity.entity(user,MediaType.APPLICATION_JSON),ArrayList.class);
+    public  ArrayList<FileArrivalMsg> getFlieArrivalMsg(User user) throws UnsupportedEncodingException {
+       ArrayList<FileArrivalMsg> arrivalMsgs  = new ArrayList<FileArrivalMsg>();
+       // HashMap<String, byte[]> availableMsgs = new HashMap<String, byte[]>();
+
+        ArrayList<String> labelList  = client.target(REST_SERCICE_URL_NOTICE).request().post(Entity.entity(user,MediaType.APPLICATION_JSON), ArrayList.class);
 //        String arrivalMsgs = client.target(REST_SERCICE_URL_NOTICE).request().post(Entity.entity(user,MediaType.APPLICATION_JSON),String.class);
+          for(int i = 0; i < labelList.size(); i ++){
+              byte[] b = getEOO(labelList.get(i));
+              FileArrivalMsg fileArrivalMsg  = new FileArrivalMsg();
+              fileArrivalMsg.setLabel(labelList.get(i));
+              fileArrivalMsg.setEOO(b);
+             //  availableMsgs.put(labelList.get(i), b);
+              arrivalMsgs.add(fileArrivalMsg);
+          }
+
+
 
         return arrivalMsgs;
     }
     public byte[] getEOO(String label){
-        byte[] b=client.target(REST_SERCICE_URL_NOTICE).request().post(Entity.entity(label, MediaType.APPLICATION_JSON_TYPE), byte[].class);
+        byte[] b=client.target(REST_SERVICE_GETEOOBYLEBEL).request().post(Entity.entity(label, MediaType.APPLICATION_JSON_TYPE), byte[].class);
         return b;
     }
     public UploadFilePackage uploadEOR(String label) throws NoSuchPaddingException, NoSuchAlgorithmException, IllegalBlockSizeException, BadPaddingException, SignatureException, InvalidKeyException {
@@ -100,6 +113,21 @@ public class ClientRest {
         PrivateKey privateKey = GenerateKey.generatePrivateKey(user.getPrivateKey());
         t1.setReceiverSignature(Keys.encrypt(privateKey,HashDocument.generateHash(getEOO(label))));
         client.target(REST_SERCICE_URL_UPLOADFILESERVICE).request().post(Entity.entity(t1, MediaType.APPLICATION_JSON_TYPE), TransactionRecord.class);
+        return null;
+    }
+
+    public void requireForFile(String label, byte[] senderSignature, User user) throws NoSuchPaddingException, NoSuchAlgorithmException, IllegalBlockSizeException, BadPaddingException, SignatureException, InvalidKeyException, IOException {
+        RequireDocumentMsg requireDocumentMsg = new RequireDocumentMsg();
+        requireDocumentMsg.setLabel(label);
+        PrivateKey privateKey = GenerateKey.generatePrivateKey(user.getPrivateKey());
+        byte[] hashbytes = HashDocument.generateHash(senderSignature);
+        requireDocumentMsg.setEORofReceiver(Keys.encrypt(privateKey, hashbytes));
+        byte[] b = Keys.decrypt(GenerateKey.generatePublicKey(user.getPublicKey()), requireDocumentMsg.getEORofReceiver());
+        System.out.println(Arrays.equals(hashbytes, b));
+        DownloadedFile response =    client.target(REST_SERVICE_GETFILE).request().post(Entity.entity(requireDocumentMsg, MediaType.APPLICATION_JSON_TYPE), DownloadedFile.class);
+
+        String uploadedFileLocation = "E:\\" + response.getFileName();
+        writeToFile(new ByteArrayInputStream(response.getFilebody()),uploadedFileLocation );
     }
 
     public void requestForConnect(User user) {
@@ -129,7 +157,42 @@ public class ClientRest {
 
         String response = client.target(REST_SERCICE_URL_UPLOADFILESERVICE).request().post(Entity.entity(uploadFilePackage, MediaType.APPLICATION_JSON), String.class);
 
-        System.out.println(response);
+
+
+    }
+
+    public void requestForReceipt(User user, String label){
+        CheckArrivalRequsetMsg checkArrivalRequsetMsg = new CheckArrivalRequsetMsg();
+        checkArrivalRequsetMsg.setLabel(label);
+        checkArrivalRequsetMsg.setSignatureOfSender(user.getSign());
+       byte[] bytes =  client.target(REST_SERVICE_GETRECEIPT).request().post(Entity.entity(checkArrivalRequsetMsg, MediaType.APPLICATION_JSON), byte[].class);
+        if(bytes!= null){
+            System.out.println("receipt got");
+        }
+        else{
+            System.out.println("no receipt");
+    }
+    }
+
+    private void writeToFile(InputStream uploadedInputStream,
+                             String uploadedFileLocation) {
+
+        try {
+            OutputStream out = new FileOutputStream(new File(
+                    uploadedFileLocation));
+            int read = 0;
+            byte[] bytes = new byte[1024];
+
+            out = new FileOutputStream(new File(uploadedFileLocation));
+            while ((read = uploadedInputStream.read(bytes)) != -1) {
+                out.write(bytes, 0, read);
+            }
+            out.flush();
+            out.close();
+        } catch (IOException e) {
+
+            e.printStackTrace();
+        }
 
     }
 

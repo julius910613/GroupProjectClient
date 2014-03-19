@@ -24,8 +24,8 @@ public class HashDocument {
     }
 
     static byte[] array ;
-    private static final File dataDir = new File("H:\\CSC8109\\");
-    private static final File document = new File(dataDir,"test.txt");
+    private static final File dataDir = new File("D:\\");
+    private static final File document = new File(dataDir,"1.txt");
     public static byte[] shaHash() throws IOException {
         // give hash code of a document
         FileInputStream fileInputStream=new FileInputStream(document);

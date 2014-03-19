@@ -55,17 +55,20 @@ public class test {
 
             System.out.println("Get EOO");
 
-            byte[] EOO=clientRest.getEOO("1");
-            System.out.println(EOO.length);
-            byte[] b =Keys.encrypt(GenerateKey.generatePrivateKey(receiver.getPrivateKey()),HashDocument.generateHash(EOO));
-            byte[] c =Keys.decrypt(GenerateKey.generatePublicKey(receiver.getPublicKey()),b);
-        System.out.println(Arrays.equals(HashDocument.generateHash(EOO),c));
+//            byte[] EOO=clientRest.getEOO("1");
+//            System.out.println(EOO.length);
+//            byte[] b =Keys.encrypt(GenerateKey.generatePrivateKey(receiver.getPrivateKey()),HashDocument.generateHash(EOO));
+//            byte[] c =Keys.decrypt(GenerateKey.generatePublicKey(receiver.getPublicKey()),b);
+//        System.out.println(Arrays.equals(HashDocument.generateHash(EOO),c));
 
 
+        ArrayList<FileArrivalMsg> list = clientRest.getFlieArrivalMsg(receiver);
+        for(int i = 0; i < list.size(); i ++){
+            System.out.println(list.get(i).getLabel() + " " + list.get(i).getEOO().length);
+        }
 
-
-
-        System.out.println("------------------------");
+        clientRest.requireForFile(list.get(0).getLabel(), list.get(0).getEOO(),receiver);
+        clientRest.requestForReceipt(user, "1");
 
 
 

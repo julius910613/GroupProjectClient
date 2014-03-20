@@ -1,5 +1,8 @@
 package clientRest;
 
+import entity.User;
+import keyPairs.GenerateKey;
+
 /**
  * Created with IntelliJ IDEA.
  * User: cmdadmin
@@ -7,5 +10,37 @@ package clientRest;
  * Time: 13:29
  * To change this template use File | Settings | File Templates.
  */
-public class MainThread {
+public class MainThread implements Runnable {
+
+    static Thread listenThread;
+    static ClientRest clientRest = new ClientRest();
+
+    User sender;
+    User receiver;
+
+   public MainThread(User user, User user2){
+      this.sender = user;
+       this.receiver = user2;
+   }
+
+    @Override
+    public void run() {
+        //To change body of implemented methods use File | Settings | File Templates.
+
+        ListenThread lt = new ListenThread(receiver);
+        listenThread = new Thread(lt) ;
+        listenThread.start();
+       // listenThread = new Thread(lt);
+         for(int i = 0; i < 10; i ++){
+             clientRest.requestForReceipt(sender, "1");
+             try {
+                 Thread.sleep(500);
+             } catch (InterruptedException e) {
+                 e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+             }
+         }
+
+
+
+    }
 }

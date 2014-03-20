@@ -13,6 +13,26 @@ public class DownloadedFile {
 
     String fileName;
 
+    String responseMsg;
+
+    boolean getFile;
+
+    public String getResponseMsg() {
+        return responseMsg;
+    }
+
+    public void setResponseMsg(String responseMsg) {
+        this.responseMsg = responseMsg;
+    }
+
+    public boolean isGetFile() {
+        return getFile;
+    }
+
+    public void setGetFile(boolean getFile) {
+        this.getFile = getFile;
+    }
+
     public byte[] getFilebody() {
         return filebody;
     }

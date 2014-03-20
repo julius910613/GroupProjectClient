@@ -54,6 +54,8 @@ public class ClientRest {
     private static final String REST_SERVICE_GETEOOBYLEBEL = "http://localhost:8080/TTPService/getSignatureByLabel";
     private static final String REST_SERVICE_GETFILE = "http://localhost:8080/TTPService/requireGetDocumentService";
     private static final String REST_SERVICE_GETRECEIPT = "http://localhost:8080/TTPService/requireGetReceiptService";
+
+    private static final String REST_SERVER_ABORT = "http://localhost:8080/TTPService/abortTransactionService";
     private static final String FILE_ROUTE = "D:\\1.txt";
     Client client = ClientBuilder.newClient().register(JacksonFeature.class);
 
@@ -126,8 +128,15 @@ public class ClientRest {
         System.out.println(Arrays.equals(hashbytes, b));
         DownloadedFile response =    client.target(REST_SERVICE_GETFILE).request().post(Entity.entity(requireDocumentMsg, MediaType.APPLICATION_JSON_TYPE), DownloadedFile.class);
 
-        String uploadedFileLocation = "E:\\" + response.getFileName();
-        writeToFile(new ByteArrayInputStream(response.getFilebody()),uploadedFileLocation );
+        if(response.isGetFile()){
+            System.out.println("file got");
+            String uploadedFileLocation = "E:\\" + response.getFileName();
+            writeToFile(new ByteArrayInputStream(response.getFilebody()),uploadedFileLocation );
+        }
+        else{
+            System.out.println(response.getResponseMsg());
+        }
+
     }
 
     public void requestForConnect(User user) {
@@ -165,8 +174,8 @@ public class ClientRest {
         CheckArrivalRequsetMsg checkArrivalRequsetMsg = new CheckArrivalRequsetMsg();
         checkArrivalRequsetMsg.setLabel(label);
         checkArrivalRequsetMsg.setSignatureOfSender(user.getSign());
-       byte[] bytes =  client.target(REST_SERVICE_GETRECEIPT).request().post(Entity.entity(checkArrivalRequsetMsg, MediaType.APPLICATION_JSON), byte[].class);
-        if(bytes!= null){
+     ReceiptMsg  msg  =  client.target(REST_SERVICE_GETRECEIPT).request().post(Entity.entity(checkArrivalRequsetMsg, MediaType.APPLICATION_JSON),ReceiptMsg.class);
+        if(msg.isGotRecept() == true){
             System.out.println("receipt got");
         }
         else{
@@ -255,5 +264,22 @@ public class ClientRest {
 
     }
 
+
+
+    public void abortTransaction(String label, User user){
+        AbortTransactionMsg abortTransactionMsg = new AbortTransactionMsg();
+        abortTransactionMsg.setLabel(label);
+        abortTransactionMsg.setUser(user);
+        AbortTransactionResponse abortTransactionResponse = client.target(REST_SERVER_ABORT).request().post(Entity.entity(abortTransactionMsg, MediaType.APPLICATION_JSON),AbortTransactionResponse.class);
+
+        if(abortTransactionResponse.isDeleteFlag()){
+            System.out.println("transaction has been abort");
+        }  else{
+            System.out.println(abortTransactionResponse.getResponseMsg());
+        }
+
+
+
+    }
 
 }

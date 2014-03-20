@@ -1,6 +1,7 @@
 package keyPairs;
 
 import clientRest.ClientRest;
+import clientRest.MainThread;
 import entity.FileArrivalMsg;
 import entity.User;
 
@@ -22,38 +23,57 @@ import java.util.HashMap;
  * Created by xwen on 3/12/14.
  */
 public class test {
-    public static void main(String[] args) throws IOException, NoSuchPaddingException, NoSuchAlgorithmException, BadPaddingException, SignatureException, InvalidKeyException, IllegalBlockSizeException {
+
+    static Thread thread;
+
+    public static void main(String[] args) throws IOException, NoSuchPaddingException, NoSuchAlgorithmException, BadPaddingException, SignatureException, InvalidKeyException, IllegalBlockSizeException, InterruptedException {
         ClientRest clientRest=new ClientRest();
         User user = new User("123@gmail.com", 1024);
 
     //    System.out.println(user.getPublicKey().toString());
 
         PrivateKey privateKey = GenerateKey.generatePrivateKey(user.getPrivateKey());
-        PublicKey publicKey = GenerateKey.generatePublicKey(user.getPublicKey());
+        //PublicKey publicKey = GenerateKey.generatePublicKey(user.getPublicKey());
         user.setSign(user.generateSign(privateKey));
         byte[] a = user.getSign();
     //    System.out.println(new String(user.getSign(),"UTF-8"));
 
 
           clientRest.requestForConnect(user);
+      //  clientRest.requestForConnect(user);
           //clientRest.requestForConnect(user);
-        try {
-            clientRest.requestForUploadFile(user);
-        } catch (Exception e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
-
         User receiver = new User("111@aa.com", 1024);
         try {
             PrivateKey privateKey1 = GenerateKey.generatePrivateKey(receiver.getPrivateKey());
-            receiver.setSign(user.generateSign(privateKey1));
+            receiver.setSign(receiver.generateSign(privateKey1));
             clientRest.requestForConnect(receiver);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
 
-            System.out.println("Get EOO");
+       // MainThread mainThread = new MainThread(user, receiver);
+
+//        thread = new Thread(mainThread);
+//        thread.start();
+//        try {
+//            Thread.sleep(1000);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+//        }
+
+        try {
+            clientRest.requestForUploadFile(user);
+            System.out.println("sender has sent the file");
+        } catch (Exception e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+
+
+
+
+
+        System.out.println("Get EOO");
 
 //            byte[] EOO=clientRest.getEOO("1");
 //            System.out.println(EOO.length);
@@ -62,13 +82,22 @@ public class test {
 //        System.out.println(Arrays.equals(HashDocument.generateHash(EOO),c));
 
 
-        ArrayList<FileArrivalMsg> list = clientRest.getFlieArrivalMsg(receiver);
-        for(int i = 0; i < list.size(); i ++){
-            System.out.println(list.get(i).getLabel() + " " + list.get(i).getEOO().length);
+       ArrayList<FileArrivalMsg> list = clientRest.getFlieArrivalMsg(receiver);
+
+        System.out.println(list.size());
+        if(list.size() != 0){
+            for(int i = 0; i < list.size(); i ++){
+                System.out.println(list.get(i).getLabel() + " " + list.get(i).getEOO().length);
+            }
         }
 
+
+       //Thread.sleep(1000);
         clientRest.requireForFile(list.get(0).getLabel(), list.get(0).getEOO(),receiver);
-        clientRest.requestForReceipt(user, "1");
+
+        clientRest.abortTransaction("1", user);
+
+       // clientRest.requestForReceipt(user, "1");
 
 
 
@@ -86,7 +115,7 @@ public class test {
 //            user.setSign(privateKey);
 //            try {
 //                byte[] a = Keys.decrypt(publicKey, user.getSign());
-//                if (Arrays.equals(a, user.getUserEmailAddress().getBytes())) {
+//                if (Arrays.equals(a, user.getUserEmailAddress().getBytes())) {                                                 [
 //                    System.out.println("2");
 //                }
 //            } catch (InvalidKeyException e) {

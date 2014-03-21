@@ -126,11 +126,12 @@ public class ClientRest {
         requireDocumentMsg.setEORofReceiver(Keys.encrypt(privateKey, hashbytes));
         byte[] b = Keys.decrypt(GenerateKey.generatePublicKey(user.getPublicKey()), requireDocumentMsg.getEORofReceiver());
         System.out.println(Arrays.equals(hashbytes, b));
-        DownloadedFile response =    client.target(REST_SERVICE_GETFILE).request().post(Entity.entity(requireDocumentMsg, MediaType.APPLICATION_JSON_TYPE), DownloadedFile.class);
+        DownloadedFile response =  client.target(REST_SERVICE_GETFILE).request().post(Entity.entity(requireDocumentMsg, MediaType.APPLICATION_JSON_TYPE), DownloadedFile.class);
 
         if(response.isGetFile()){
             System.out.println("file got");
             String uploadedFileLocation = "E:\\" + response.getFileName();
+            System.out.println(response.getDownloadURL());
             writeToFile(new ByteArrayInputStream(response.getFilebody()),uploadedFileLocation );
         }
         else{

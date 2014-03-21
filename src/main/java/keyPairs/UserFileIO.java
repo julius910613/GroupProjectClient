@@ -22,7 +22,7 @@ public class UserFileIO {
 
         bw.write(user.getUserEmailAddress());
         bw.newLine();
-        String str = new String(Base64.encodeBase64(user.getPublicKey()));
+        String str = new String(Base64.decodeBase64(user.getPublicKey()));
         bw.write(str);
         bw.newLine();
         str = new String(Base64.encodeBase64(user.getPrivateKey()));

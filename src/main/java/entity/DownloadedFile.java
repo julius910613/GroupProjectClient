@@ -1,5 +1,7 @@
 package entity;
 
+import java.net.URL;
+
 /**
  * Created with IntelliJ IDEA.
  * User: cmdadmin
@@ -16,6 +18,16 @@ public class DownloadedFile {
     String responseMsg;
 
     boolean getFile;
+
+    URL downloadURL;
+
+    public URL getDownloadURL() {
+        return downloadURL;
+    }
+
+    public void setDownloadURL(URL downloadURL) {
+        this.downloadURL = downloadURL;
+    }
 
     public String getResponseMsg() {
         return responseMsg;

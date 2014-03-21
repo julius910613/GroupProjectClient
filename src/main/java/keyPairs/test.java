@@ -103,9 +103,12 @@ public class test {
        //Thread.sleep(1000);
         clientRest.requireForFile(list.get(0).getLabel(), list.get(0).getEOO(),receiver);
 
+        clientRest.requestForReceipt(user, "1");
+
+
         clientRest.abortTransaction("1", user);
 
-       // clientRest.requestForReceipt(user, "1");
+       //
 
 
 

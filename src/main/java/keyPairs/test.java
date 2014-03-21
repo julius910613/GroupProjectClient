@@ -28,6 +28,9 @@ public class test {
 
     public static void main(String[] args) throws IOException, NoSuchPaddingException, NoSuchAlgorithmException, BadPaddingException, SignatureException, InvalidKeyException, IllegalBlockSizeException, InterruptedException {
         ClientRest clientRest=new ClientRest();
+
+
+
         User user = new User("123@gmail.com", 1024);
 
     //    System.out.println(user.getPublicKey().toString());
@@ -38,6 +41,7 @@ public class test {
         byte[] a = user.getSign();
     //    System.out.println(new String(user.getSign(),"UTF-8"));
 
+        UserFileIO.generateUserInfoFile(user);
 
           clientRest.requestForConnect(user);
       //  clientRest.requestForConnect(user);
@@ -46,6 +50,10 @@ public class test {
         try {
             PrivateKey privateKey1 = GenerateKey.generatePrivateKey(receiver.getPrivateKey());
             receiver.setSign(receiver.generateSign(privateKey1));
+            User testUser = UserFileIO.getUserInfoFromFile(user.getUserEmailAddress());
+
+            System.out.println(Arrays.equals(user.getPrivateKey(), testUser.getPrivateKey()));
+
             clientRest.requestForConnect(receiver);
         } catch (Exception e) {
             e.printStackTrace();

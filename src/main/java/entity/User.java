@@ -28,7 +28,7 @@ public class User extends UserSign {
             KeyPair keyPair = Keys.generateKeys(i);
             this.privateKey = keyPair.getPrivate().getEncoded();
             this.publicKey = keyPair.getPublic().getEncoded();
-            System.out.println("key");
+
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         } catch (NoSuchProviderException e) {

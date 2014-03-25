@@ -7,6 +7,7 @@ import entity.User;
 import keyPairs.GenerateKey;
 import keyPairs.HashDocument;
 import keyPairs.Keys;
+import keyPairs.test;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.http.entity.ContentType;
 import org.codehaus.jackson.annotate.JsonAutoDetect;
@@ -152,7 +153,7 @@ public class ClientRest {
         tmp.setSign(user.getSign());
 
         ConnectionMsg cm = client.target(REST_SERVICE_URL_USER).request().post(Entity.entity(tmp, MediaType.APPLICATION_JSON), ConnectionMsg.class);
-        System.out.println(cm.isAccessPermission());
+
         if (cm.isAccessPermission() == true) {
             label = cm.getLabel();
             System.out.println(label);
@@ -177,12 +178,12 @@ public class ClientRest {
 
         String response = client.target(REST_SERCICE_URL_UPLOADFILESERVICE).request().post(Entity.entity(uploadFilePackage, MediaType.APPLICATION_JSON), String.class);
 
-
+        test.uploadedFileList.add(uploadFilePackage.getLabel());
     }
 
-    public void requestForReceipt(User user) {
+    public boolean requestForReceipt(User user, String label) {
         CheckArrivalRequsetMsg checkArrivalRequsetMsg = new CheckArrivalRequsetMsg();
-        checkArrivalRequsetMsg.setLabel(labelList.get(labelList.size() - 1));
+        checkArrivalRequsetMsg.setLabel(label);
         checkArrivalRequsetMsg.setSignatureOfSender(user.getSign());
         ReceiptMsg msg = client.target(REST_SERVICE_GETRECEIPT).request().post(Entity.entity(checkArrivalRequsetMsg, MediaType.APPLICATION_JSON), ReceiptMsg.class);
         if (msg.isGotRecept() == true) {
@@ -190,6 +191,7 @@ public class ClientRest {
         } else {
             System.out.println("no receipt");
         }
+        return msg.isGotRecept();
     }
 
     private void writeToFile(InputStream uploadedInputStream,

@@ -3,6 +3,7 @@ package clientRest;
 import entity.FileArrivalMsg;
 import entity.User;
 import keyPairs.GenerateKey;
+import keyPairs.test;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
@@ -22,12 +23,12 @@ import java.util.ArrayList;
  * Time: 14:19
  * To change this template use File | Settings | File Templates.
  */
-public class ListenThread implements Runnable {
+public class CheckArrivalFileThread implements Runnable {
 
     private User receiver;
     private ClientRest clientRest = new ClientRest();
 
-    public  ListenThread(User user){
+    public CheckArrivalFileThread(User user){
           this.receiver = user;
     }
 
@@ -43,28 +44,18 @@ public class ListenThread implements Runnable {
 
                  }
                  else{
-                    System.out.println("______________________________");
-                    System.out.println("you got " + list.size() + "file");
-                     Thread.sleep(1000);
-                     clientRest.requireForFile(list.get(0).getLabel(), list.get(0).getEOO(),receiver);
+                     for(int i = 0; i < list.size(); i ++){
+                         test.arrivalFileList.add(list.get(i));
+                         System.out.println("you got a new file!");
+                     }
+
                  }
                  Thread.sleep(30000);
              } catch (UnsupportedEncodingException e) {
                  e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
              } catch (InterruptedException e) {
                  e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-             } catch (NoSuchPaddingException e) {
-                 e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-             } catch (NoSuchAlgorithmException e) {
-                 e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-             } catch (IllegalBlockSizeException e) {
-                 e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-             } catch (BadPaddingException e) {
-                 e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-             } catch (SignatureException e) {
-                 e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-             } catch (InvalidKeyException e) {
-                 e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+
              } catch (IOException e) {
                  e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
              }

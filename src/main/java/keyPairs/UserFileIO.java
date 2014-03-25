@@ -22,13 +22,13 @@ public class UserFileIO {
 
         bw.write(user.getUserEmailAddress());
         bw.newLine();
-        String str = new String(Base64.decodeBase64(user.getPublicKey()));
+        String str = Base64.encodeBase64URLSafeString(user.getPublicKey());
         bw.write(str);
         bw.newLine();
-        str = new String(Base64.encodeBase64(user.getPrivateKey()));
+        str = Base64.encodeBase64URLSafeString(user.getPrivateKey());
         bw.write(str);
         bw.newLine();
-        str = new String(Base64.encodeBase64(user.getSign()));
+        str = Base64.encodeBase64URLSafeString(user.getSign());
         bw.write(str);
         bw.close();
         fw.close();

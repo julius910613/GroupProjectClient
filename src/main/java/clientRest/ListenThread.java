@@ -34,12 +34,12 @@ public class ListenThread implements Runnable {
     @Override
     public void run() {
         //To change body of implemented methods use File | Settings | File Templates.
-         for(int i = 0; i < 50; i ++){
+       while (true){
              try {
                ArrayList<FileArrivalMsg> list = clientRest.getFlieArrivalMsg(receiver);
                  System.out.println(list.size());
                  if(list.size() == 0){
-                     System.out.println("no file for you");
+                    // System.out.println("no file for you");
 
                  }
                  else{
@@ -48,7 +48,7 @@ public class ListenThread implements Runnable {
                      Thread.sleep(1000);
                      clientRest.requireForFile(list.get(0).getLabel(), list.get(0).getEOO(),receiver);
                  }
-                 Thread.sleep(100);
+                 Thread.sleep(30000);
              } catch (UnsupportedEncodingException e) {
                  e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
              } catch (InterruptedException e) {

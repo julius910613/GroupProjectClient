@@ -25,134 +25,82 @@ import java.util.HashMap;
 public class test {
 
     static Thread thread;
+    static ArrayList<FileArrivalMsg> list;
 
     public static void main(String[] args) throws IOException, NoSuchPaddingException, NoSuchAlgorithmException, BadPaddingException, SignatureException, InvalidKeyException, IllegalBlockSizeException, InterruptedException {
-        ClientRest clientRest=new ClientRest();
+        ClientRest clientRest = new ClientRest();
+        User user;
+        User receiver;
+
+        String userEmail = "690081332@qq.com";
 
 
+        if (clientRest.isExist(userEmail)) {
+            user = UserFileIO.getUserInfoFromFile(userEmail);
+            System.out.println(user.getUserEmailAddress() + " " + user.getPublicKey().length + " " + user.getPrivateKey().length + " " + user.getSign().length);
+        } else {
+            user = new User(userEmail, 1024);
+            PrivateKey privateKey = GenerateKey.generatePrivateKey(user.getPrivateKey());
+            user.setSign(user.generateSign(privateKey));
 
-        User user = new User("123@gmail.com", 1024);
-
-    //    System.out.println(user.getPublicKey().toString());
-
-        PrivateKey privateKey = GenerateKey.generatePrivateKey(user.getPrivateKey());
-        //PublicKey publicKey = GenerateKey.generatePublicKey(user.getPublicKey());
-        user.setSign(user.generateSign(privateKey));
-        byte[] a = user.getSign();
-    //    System.out.println(new String(user.getSign(),"UTF-8"));
-
-        UserFileIO.generateUserInfoFile(user);
-
-          clientRest.requestForConnect(user);
-      //  clientRest.requestForConnect(user);
-          //clientRest.requestForConnect(user);
-        User receiver = new User("111@aa.com", 1024);
-        try {
-            PrivateKey privateKey1 = GenerateKey.generatePrivateKey(receiver.getPrivateKey());
-            receiver.setSign(receiver.generateSign(privateKey1));
-            User testUser = UserFileIO.getUserInfoFromFile(user.getUserEmailAddress());
-
-            System.out.println(Arrays.equals(user.getPrivateKey(), testUser.getPrivateKey()));
-
-            clientRest.requestForConnect(receiver);
-        } catch (Exception e) {
-            e.printStackTrace();
+            UserFileIO.generateUserInfoFile(user);
         }
 
+        clientRest.requestForConnect(user);
 
-       // MainThread mainThread = new MainThread(user, receiver);
+        String receiverEmail = "lifanchenjulius@gmail.com";
 
-//        thread = new Thread(mainThread);
-//        thread.start();
-//        try {
-//            Thread.sleep(1000);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-//        }
 
+        if (clientRest.isExist(receiverEmail)) {
+            receiver = UserFileIO.getUserInfoFromFile(receiverEmail);
+        } else {
+            receiver = new User(receiverEmail, 1024);
+            PrivateKey privateKey = GenerateKey.generatePrivateKey(receiver.getPrivateKey());
+            receiver.setSign(receiver.generateSign(privateKey));
+
+            UserFileIO.generateUserInfoFile(receiver);
+        }
+
+        clientRest.requestForConnect(receiver);
+
+
+//       // MainThread mainThread = new MainThread(user, receiver);
+//
+////        thread = new Thread(mainThread);
+////        thread.start();
+////        try {
+////            Thread.sleep(1000);
+////        } catch (InterruptedException e) {
+////            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+////        }
+//
         try {
-            clientRest.requestForUploadFile(user);
+            clientRest.requestForUploadFile(user, receiverEmail, "1.txt");
             System.out.println("sender has sent the file");
         } catch (Exception e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
 
 
-
-
-
-        System.out.println("Get EOO");
-
-//            byte[] EOO=clientRest.getEOO("1");
-//            System.out.println(EOO.length);
-//            byte[] b =Keys.encrypt(GenerateKey.generatePrivateKey(receiver.getPrivateKey()),HashDocument.generateHash(EOO));
-//            byte[] c =Keys.decrypt(GenerateKey.generatePublicKey(receiver.getPublicKey()),b);
-//        System.out.println(Arrays.equals(HashDocument.generateHash(EOO),c));
-
-
-       ArrayList<FileArrivalMsg> list = clientRest.getFlieArrivalMsg(receiver);
-
+        list = clientRest.getFlieArrivalMsg(receiver);
+//
         System.out.println(list.size());
-        if(list.size() != 0){
-            for(int i = 0; i < list.size(); i ++){
+        if (list.size() != 0) {
+            for (int i = 0; i < list.size(); i++) {
                 System.out.println(list.get(i).getLabel() + " " + list.get(i).getEOO().length);
             }
         }
+        //clientRest.abortTransaction(list.get(list.size() - 1).getLabel(), user);
+////
+////       //Thread.sleep(1000);
+        clientRest.requireForFile(list.get(list.size() - 1).getLabel(), list.get(list.size() - 1).getEOO(), receiver);
 
+        clientRest.requestForReceipt(user);
 
-       //Thread.sleep(1000);
-        clientRest.requireForFile(list.get(0).getLabel(), list.get(0).getEOO(),receiver);
-
-        clientRest.requestForReceipt(user, "1");
-
-
-        clientRest.abortTransaction("1", user);
-
-       //
-
-
-
-
-
-
-//        X509EncodedKeySpec pubString = new X509EncodedKeySpec(user.getPublicKey());
-//        PKCS8EncodedKeySpec priString = new PKCS8EncodedKeySpec(user.getPrivateKey());
-//        try {
-//            KeyFactory keyFactory = KeyFactory.getInstance("RSA");
-//            PrivateKey privateKey = keyFactory.generatePrivate(priString);
-//            PublicKey publicKey = keyFactory.generatePublic(pubString);
-//            System.out.println(Arrays.equals(privateKey.getEncoded(), user.getPrivateKey()));
-//            System.out.println(Arrays.equals(publicKey.getEncoded(), user.getPublicKey()));
-//            user.setSign(privateKey);
-//            try {
-//                byte[] a = Keys.decrypt(publicKey, user.getSign());
-//                if (Arrays.equals(a, user.getUserEmailAddress().getBytes())) {                                                 [
-//                    System.out.println("2");
-//                }
-//            } catch (InvalidKeyException e) {
-//                e.printStackTrace();
-//            } catch (SignatureException e) {
-//                e.printStackTrace();
-//            } catch (NoSuchPaddingException e) {
-//                e.printStackTrace();
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            } catch (BadPaddingException e) {
-//                e.printStackTrace();
-//            } catch (IllegalBlockSizeException e) {
-//                e.printStackTrace();
-//            }
 //
-//        } catch (NoSuchAlgorithmException e) {
-//            e.printStackTrace();
-//        } catch (InvalidKeySpecException e) {
-//            e.printStackTrace();
-//        }
 
-
-        // clientRest.addUser(user);
-
-        // System.out.println(clientRest.isExist("123@gmail.com"));
+//
 
     }
 }
+

@@ -7,6 +7,7 @@ import entity.User;
 import keyPairs.GenerateKey;
 import keyPairs.HashDocument;
 import keyPairs.Keys;
+import org.apache.commons.codec.binary.Base64;
 import org.apache.http.entity.ContentType;
 import org.codehaus.jackson.annotate.JsonAutoDetect;
 import org.codehaus.jackson.annotate.JsonMethod;
@@ -44,19 +45,18 @@ import org.apache.http.impl.client.DefaultHttpClient;
  */
 public class ClientRest {
 
-    private static String label;
-
     private static final String REST_SERVICE_URL_USER = "http://localhost:8080/TTPService/requsetForConection";
-    private static final String REST_SERVICE_URL = "http://localhost:8080/userService";
+    private static final String REST_SERVICE_URL = "http://localhost:8080/TTPService";
     private static final String REST_SERCICE_URL_UPLOADFILE = "http://localhost:8080/TTPService/uploadFile";
     private static final String REST_SERCICE_URL_UPLOADFILESERVICE = "http://localhost:8080/TTPService/uploadFileService";
     private static final String REST_SERCICE_URL_NOTICE = "http://localhost:8080/TTPService/noticeOfFileArrivalService";
     private static final String REST_SERVICE_GETEOOBYLEBEL = "http://localhost:8080/TTPService/getSignatureByLabel";
     private static final String REST_SERVICE_GETFILE = "http://localhost:8080/TTPService/requireGetDocumentService";
     private static final String REST_SERVICE_GETRECEIPT = "http://localhost:8080/TTPService/requireGetReceiptService";
-
     private static final String REST_SERVER_ABORT = "http://localhost:8080/TTPService/abortTransactionService";
     private static final String FILE_ROUTE = "D:\\1.txt";
+    private static String label;
+    private static ArrayList<String> labelList = new ArrayList<String>();
     Client client = ClientBuilder.newClient().register(JacksonFeature.class);
 
     public void addUser(User user) {
@@ -73,47 +73,50 @@ public class ClientRest {
 
     public boolean isExist(String email) {
 
-        User user = client.target(REST_SERVICE_URL).path("/{userEmailAddress}").resolveTemplate("userEmailAddress", email).request().get(User.class);
-        if (user == null) {
+        Boolean user = client.target(REST_SERVICE_URL).path("/{UserEmail}").resolveTemplate("UserEmail", email).request().get(Boolean.class);
+        if (user == false) {
             return false;
         } else {
             return true;
         }
     }
-//    class aaa extends ArrayList<FileArrivalMsg>{
+
+    //    class aaa extends ArrayList<FileArrivalMsg>{
 //        public aaa(){
 //            super();
 //        }
 //    }
-    public  ArrayList<FileArrivalMsg> getFlieArrivalMsg(User user) throws UnsupportedEncodingException {
-       ArrayList<FileArrivalMsg> arrivalMsgs  = new ArrayList<FileArrivalMsg>();
-       // HashMap<String, byte[]> availableMsgs = new HashMap<String, byte[]>();
+    public ArrayList<FileArrivalMsg> getFlieArrivalMsg(User user) throws UnsupportedEncodingException {
+        ArrayList<FileArrivalMsg> arrivalMsgs = new ArrayList<FileArrivalMsg>();
+        // HashMap<String, byte[]> availableMsgs = new HashMap<String, byte[]>();
 
-        ArrayList<String> labelList  = client.target(REST_SERCICE_URL_NOTICE).request().post(Entity.entity(user,MediaType.APPLICATION_JSON), ArrayList.class);
+        ArrayList<String> labelList = client.target(REST_SERCICE_URL_NOTICE).request().post(Entity.entity(user, MediaType.APPLICATION_JSON), ArrayList.class);
 //        String arrivalMsgs = client.target(REST_SERCICE_URL_NOTICE).request().post(Entity.entity(user,MediaType.APPLICATION_JSON),String.class);
-          for(int i = 0; i < labelList.size(); i ++){
-              byte[] b = getEOO(labelList.get(i));
-              FileArrivalMsg fileArrivalMsg  = new FileArrivalMsg();
-              fileArrivalMsg.setLabel(labelList.get(i));
-              fileArrivalMsg.setEOO(b);
-             //  availableMsgs.put(labelList.get(i), b);
-              arrivalMsgs.add(fileArrivalMsg);
-          }
-
+        System.out.println(labelList.size());
+        for (int i = 0; i < labelList.size(); i++) {
+            byte[] b = getEOO(labelList.get(i));
+            FileArrivalMsg fileArrivalMsg = new FileArrivalMsg();
+            fileArrivalMsg.setLabel(labelList.get(i));
+            fileArrivalMsg.setEOO(b);
+            //  availableMsgs.put(labelList.get(i), b);
+            arrivalMsgs.add(fileArrivalMsg);
+        }
 
 
         return arrivalMsgs;
     }
-    public byte[] getEOO(String label){
-        byte[] b=client.target(REST_SERVICE_GETEOOBYLEBEL).request().post(Entity.entity(label, MediaType.APPLICATION_JSON_TYPE), byte[].class);
+
+    public byte[] getEOO(String label) {
+        byte[] b = client.target(REST_SERVICE_GETEOOBYLEBEL).request().post(Entity.entity(label, MediaType.APPLICATION_JSON_TYPE), byte[].class);
         return b;
     }
+
     public UploadFilePackage uploadEOR(String label) throws NoSuchPaddingException, NoSuchAlgorithmException, IllegalBlockSizeException, BadPaddingException, SignatureException, InvalidKeyException {
         //UploadFilePackage uploadFilePackage=new UploadFilePackage();
-        TransactionRecord t1 = client.target(REST_SERCICE_URL_UPLOADFILESERVICE).path("/{label}").resolveTemplate("label",label).request().get(TransactionRecord.class);
-        User user=client.target(REST_SERVICE_URL_USER).path("/{userEmailAddress}").resolveTemplate("userEmailAddress",t1.getDocument().getReceiverName()).request().get(User.class);
+        TransactionRecord t1 = client.target(REST_SERCICE_URL_UPLOADFILESERVICE).path("/{label}").resolveTemplate("label", label).request().get(TransactionRecord.class);
+        User user = client.target(REST_SERVICE_URL_USER).path("/{userEmailAddress}").resolveTemplate("userEmailAddress", t1.getDocument().getReceiverName()).request().get(User.class);
         PrivateKey privateKey = GenerateKey.generatePrivateKey(user.getPrivateKey());
-        t1.setReceiverSignature(Keys.encrypt(privateKey,HashDocument.generateHash(getEOO(label))));
+        t1.setReceiverSignature(Keys.encrypt(privateKey, HashDocument.generateHash(getEOO(label))));
         client.target(REST_SERCICE_URL_UPLOADFILESERVICE).request().post(Entity.entity(t1, MediaType.APPLICATION_JSON_TYPE), TransactionRecord.class);
         return null;
     }
@@ -126,15 +129,14 @@ public class ClientRest {
         requireDocumentMsg.setEORofReceiver(Keys.encrypt(privateKey, hashbytes));
         byte[] b = Keys.decrypt(GenerateKey.generatePublicKey(user.getPublicKey()), requireDocumentMsg.getEORofReceiver());
         System.out.println(Arrays.equals(hashbytes, b));
-        DownloadedFile response =  client.target(REST_SERVICE_GETFILE).request().post(Entity.entity(requireDocumentMsg, MediaType.APPLICATION_JSON_TYPE), DownloadedFile.class);
+        DownloadedFile response = client.target(REST_SERVICE_GETFILE).request().post(Entity.entity(requireDocumentMsg, MediaType.APPLICATION_JSON_TYPE), DownloadedFile.class);
 
-        if(response.isGetFile()){
+        if (response.isGetFile()) {
             System.out.println("file got");
             String uploadedFileLocation = "E:\\" + response.getFileName();
             System.out.println(response.getDownloadURL());
-            writeToFile(new ByteArrayInputStream(response.getFilebody()),uploadedFileLocation );
-        }
-        else{
+            writeToFile(new ByteArrayInputStream(response.getFilebody()), uploadedFileLocation);
+        } else {
             System.out.println(response.getResponseMsg());
         }
 
@@ -142,46 +144,52 @@ public class ClientRest {
 
     public void requestForConnect(User user) {
 
-        ConnectionMsg cm = client.target(REST_SERVICE_URL_USER).request().post(Entity.entity(user, MediaType.APPLICATION_JSON), ConnectionMsg.class);
+        User tmp = new User();
+        tmp.setUserEmailAddress(user.getUserEmailAddress());
+        tmp.setPublicKey(user.getPublicKey());
+        byte[] a = Base64.decodeBase64("123");
+        tmp.setPrivateKey(a);
+        tmp.setSign(user.getSign());
+
+        ConnectionMsg cm = client.target(REST_SERVICE_URL_USER).request().post(Entity.entity(tmp, MediaType.APPLICATION_JSON), ConnectionMsg.class);
         System.out.println(cm.isAccessPermission());
         if (cm.isAccessPermission() == true) {
             label = cm.getLabel();
+            System.out.println(label);
+            labelList.add(label);
             //System.out.println("label"+label);
 
         }
 
     }
 
-
-    public void requestForUploadFile(User user) throws Exception {
+    public void requestForUploadFile(User user, String receiverEmail, String fileName) throws Exception {
 
         uploadFile();
         UploadFilePackage uploadFilePackage = new UploadFilePackage();
-        uploadFilePackage.setLabel("1");
+        uploadFilePackage.setLabel(labelList.get(labelList.size() - 1));
         uploadFilePackage.setSignatureOfUser(GenerateKey.encryptFileHashCode(GenerateKey.generatePrivateKey(user.getPrivateKey()), HashDocument.generateFileHashcode()));
         Document document = new Document();
         document.setSenderName(user.getUserEmailAddress());
-        document.setFileName("test.txt");
-        document.setReceiverName("111@aa.com");
+        document.setFileName(fileName);
+        document.setReceiverName(receiverEmail);
         uploadFilePackage.setDocument(document);
 
         String response = client.target(REST_SERCICE_URL_UPLOADFILESERVICE).request().post(Entity.entity(uploadFilePackage, MediaType.APPLICATION_JSON), String.class);
 
 
-
     }
 
-    public void requestForReceipt(User user, String label){
+    public void requestForReceipt(User user) {
         CheckArrivalRequsetMsg checkArrivalRequsetMsg = new CheckArrivalRequsetMsg();
-        checkArrivalRequsetMsg.setLabel(label);
+        checkArrivalRequsetMsg.setLabel(labelList.get(labelList.size() - 1));
         checkArrivalRequsetMsg.setSignatureOfSender(user.getSign());
-     ReceiptMsg  msg  =  client.target(REST_SERVICE_GETRECEIPT).request().post(Entity.entity(checkArrivalRequsetMsg, MediaType.APPLICATION_JSON),ReceiptMsg.class);
-        if(msg.isGotRecept() == true){
+        ReceiptMsg msg = client.target(REST_SERVICE_GETRECEIPT).request().post(Entity.entity(checkArrivalRequsetMsg, MediaType.APPLICATION_JSON), ReceiptMsg.class);
+        if (msg.isGotRecept() == true) {
             System.out.println("receipt got");
-        }
-        else{
+        } else {
             System.out.println("no receipt");
-    }
+        }
     }
 
     private void writeToFile(InputStream uploadedInputStream,
@@ -206,12 +214,11 @@ public class ClientRest {
 
     }
 
-
     public void uploadFile() throws Exception {
 
         File file = new File(FILE_ROUTE);
         //Upload the file
-        executeMultiPartRequest(REST_SERCICE_URL_UPLOADFILE, file, file.getName(), "File Uploaded :: Tulips.jpg");
+        executeMultiPartRequest(REST_SERCICE_URL_UPLOADFILE, file, file.getName(), "File Uploaded :: text.txt");
     }
 
     public void executeMultiPartRequest(String urlString, File file, String fileName, String fileDescription) throws Exception {
@@ -242,11 +249,11 @@ public class ClientRest {
         }
     }
 
-    public byte[] sendEOR(byte[]EOO, String label, User user){
-        PrivateKey privateKey=GenerateKey.generatePrivateKey(user.getPrivateKey());
-        byte[] bytes=HashDocument.generateHash(EOO);
+    public byte[] sendEOR(byte[] EOO, String label, User user) {
+        PrivateKey privateKey = GenerateKey.generatePrivateKey(user.getPrivateKey());
+        byte[] bytes = HashDocument.generateHash(EOO);
         try {
-            byte[] b= GenerateKey.encryptFileHashCode(privateKey,bytes);
+            byte[] b = GenerateKey.encryptFileHashCode(privateKey, bytes);
             return b;
         } catch (NoSuchPaddingException e) {
             e.printStackTrace();
@@ -265,20 +272,17 @@ public class ClientRest {
 
     }
 
-
-
-    public void abortTransaction(String label, User user){
+    public void abortTransaction(String label, User user) {
         AbortTransactionMsg abortTransactionMsg = new AbortTransactionMsg();
-        abortTransactionMsg.setLabel(label);
+        abortTransactionMsg.setLabel(labelList.get(labelList.size() - 1));
         abortTransactionMsg.setUser(user);
-        AbortTransactionResponse abortTransactionResponse = client.target(REST_SERVER_ABORT).request().post(Entity.entity(abortTransactionMsg, MediaType.APPLICATION_JSON),AbortTransactionResponse.class);
+        AbortTransactionResponse abortTransactionResponse = client.target(REST_SERVER_ABORT).request().post(Entity.entity(abortTransactionMsg, MediaType.APPLICATION_JSON), AbortTransactionResponse.class);
 
-        if(abortTransactionResponse.isDeleteFlag()){
+        if (abortTransactionResponse.isDeleteFlag()) {
             System.out.println("transaction has been abort");
-        }  else{
+        } else {
             System.out.println(abortTransactionResponse.getResponseMsg());
         }
-
 
 
     }
